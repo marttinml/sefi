@@ -7,7 +7,7 @@
 			$rootScope.spin = val == 0 ? false : true;
 		})
 		var shared = {};
-		var baseUrl = 'https://salty-reaches-54696.herokuapp.com/';
+		var baseUrl = 'https://mysterious-earth-97327.herokuapp.com/';
 		//var baseUrl = 'http://localhost:5000/';
 		var req = {
 			 method: 'POST',
