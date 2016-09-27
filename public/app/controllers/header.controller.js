@@ -37,7 +37,7 @@
 
         $scope.out = function(){
         	//window.location.href = "http://alom.mx/sefi/home.html";
-        	window.location.href = "http://myidenti.com";
+        	window.location.href = "https://stark-bastion-33994.herokuapp.com";
         };
         //$scope.session();
 
