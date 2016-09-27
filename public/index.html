@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Myidenti | Beta 2</title>
+
+	<meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    
+	<link rel="stylesheet" href="./assets/css/normalize.css">
+	<link rel="stylesheet" href="./assets/css/style.css">
+	<link rel="stylesheet" href="./assets/css/spin.css">
+	<link rel="stylesheet" href="./assets/css/login.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/font-awesome.min.css">
+	<script src="./assets/js/angular.min.js"></script>
+	<script src="./assets/js/jquery-1.8.1.min.js"></script>
+	<script src="./assets/js/jquery.foggy.min.js"></script>
+	<script src="./app/services/http.service.js"></script>
+	<script src="./app/services/login.service.js"></script>
+	<script src="./app/directives/components.directive.js"></script>
+	<script src="./app/controllers/form.controller.js"></script>
+	<script src="./app/controllers/header.controller.js"></script>
+	<script src="./app/controllers/login.controller.js"></script>
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body ng-app="app">
+	
+	<section ng-controller="LoginController" ng-hide="signed">
+			<login ng-model="data" message="message" toggle-alert="toggleAlert" btn-send="login()"></login>
+	</section>
+	
+	<section class="cover" ng-hide="signed"></section>
+
+	<header ng-controller="HeaderController">
+		<section class="logo">
+			<span class="name">Myidenti</span>
+			<i class="icon"></i>
+		</section>
+		<section class="content">
+			<span class="user">{{name}}</span>
+			<i class="logout" ng-click="logout()">
+				<i class="fa fa-power-off fa-2x"></i>
+			</i>
+		</section>
+	</header>
+
+	<div class="content" ng-controller="FormController">
+		<section class="form">
+			<ul>
+				<li><span>Apellidos</span><input type="text" ng-model="data.lastName" ></li>
+				<li><span>Nombre</span><input type="text" ng-model="data.name"></li>
+				<!-- <li class="wrapper" ><span>Fecha de nacimiento</span>
+					<input maxlength="2" placeholder="aa" type="text" ng-model="data.birthdate.year"><input maxlength="2" placeholder="mm" type="text" ng-model="data.birthdate.month"><input maxlength="2" placeholder="dd" type="text" ng-model="data.birthdate.day">
+				</li> -->
+				<!-- <li><span>Año de registro</span><input type="text"  ng-model="data.registerYear"></li> -->
+				<li><span>Edad</span><input type="text"  ng-model="data.old"></li>
+				<li><span>Calle</span><input type="text" ng-model="data.street"></li>
+				<li><span>Genero</span>
+					<select name="repeatSelect" ng-model="data.sex" >
+				    	<option ng-repeat="option in sexList" value="{{option}}">{{option.name}}</option>
+				    </select>
+				</li>
+				<li>
+				<span>Sube una foto</span>
+				<span class="custom-label">Click para subir una foto</span>
+				<span class="custom-img" ng-style="backgroundPicture"></span>
+				<input class="transparent" type="file" ng-model="anyObj" onchange="angular.element(this).scope().readURL(this)">
+				</li>
+				<li class="content">
+					<span ng-click="toggleContent()">Dirección base</span>
+					<i class="fa fa-chevron-up" ng-class="{'fa-chevron-down':isToggleContent()}"></i>
+					<hr>
+					<ul ng-class="{'animate-hide':isToggleContent()}">
+						
+						<li><span>Colonia / Localidad</span><input type="text" ng-model="data.baseAddress.local"></li>
+						<!-- <li><span>Localidad</span><input type="text" ng-model="data.baseAddress.localN"></li> -->
+						<li><span>Delegación / Municipio</span><input type="text" ng-model="data.baseAddress.del"></li>
+						<!-- <li><span>Municipio</span><input type="text" ng-model="data.baseAddress.delN"></li> -->
+						<li><span>Codigo postal</span><input type="text" ng-model="data.baseAddress.cp"></li>
+						<li><span>Sección</span><input type="text" ng-model="data.baseAddress.section" maxlength="6"></li>
+						<li><span>Estado</span>
+							<select name="repeatSelect" ng-model="data.baseAddress.state" >
+					        	<option ng-repeat="option in statesList" value="{{option}}">{{option.name}}</option>
+					    	</select>
+					    </li>
+					</ul>
+				</li>
+				<li class="content"></li>
+				<li>
+					<button class="cancel" ng-click="clear()">Limpiar</button>
+					<button class="agree" ng-click="create()">Generar</button>
+				</li>
+			</ul>
+		</section>
+		<section class="result">
+			<div class="content">
+				<div class="lines"></div>
+				<span class="lastName1">{{result.lastName1}}</span>
+				<span class="lastName2">{{result.lastName2}}</span>
+				<span class="name">{{result.name}}</span>
+				<span class="address1">{{result.address1}}</span>
+				<span class="address2">{{result.address2}}</span>
+				<span class="address3">{{result.address3}}</span>
+				<span class="folio">{{result.folio}}</span>
+				<span class="registerYear">{{result.registerYear}}</span>
+				<span class="folioIFE">{{result.folioIFE}}</span>
+				<span class="no">{{result.no}}</span>
+				<span class="localN">{{result.localN}}</span>
+				<span class="delN">{{result.delN}}</span>
+				<span class="section">{{result.section}}</span>
+				<span class="old">{{result.old}}</span>
+				<span class="sex">{{result.sex}}</span>
+				<span class="sign" ng-style="result.pictureSign"></span>
+				<span class="picture" ng-style="result.picture"></span>
+				<div class="picture-lines"></div>
+				<span class="id" >{{result.ID}}</span>
+			</div>
+			<div class="anexos">
+				<ul>
+					<li><span class="title">CURP</span><span class="title-result">{{result.curp}}</span></li>
+				</ul>
+			</div>
+		</section>
+	</div>
+	<spin ng-model="spin"></spin>
+</body>
+</html>
