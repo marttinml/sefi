@@ -427,7 +427,7 @@ section.result > .content > .id{
 /*animations*/
 
 section.form  ul > li.content > ul{
-	height: 258px;
+	height: 308px;
 	overflow: hidden;
 	transition:.3s;
 }

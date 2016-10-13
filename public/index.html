@@ -87,6 +87,11 @@
 					        	<option ng-repeat="option in statesList" value="{{option}}">{{option.name}}</option>
 					    	</select>
 					    </li>
+					    <li><span>Localidad</span>
+							<select name="repeatSelect" ng-model="data.baseAddress.localN" >
+					        	<option ng-repeat="option in localList" value="{{option}}">{{option.name}}</option>
+					    	</select>
+					    </li>
 					</ul>
 				</li>
 				<li class="content"></li>

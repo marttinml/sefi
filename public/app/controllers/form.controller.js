@@ -11,13 +11,60 @@
 	    ];
 	    $scope.spin = $rootScope.spin;
 		$scope.statesList = [
-			{no:'09',id:'DF',		name:'Distrito Federal'},
-			{no:'15',id:'MEX.',		name:'Estado de México'},
-			{no:'17',id:'MOR',		name:'Morelos'},
-			{no:'22',id:'QRO',		name:'Querétaro'},
-			{no:'11',id:'GTO',		name:'Guanajuato'},
-			{no:'24',id:'S.L.P',	name:'San Luis Potosí'},
-			{no:'01',id:'AGS',name:'Aguascalientes'},
+			{no:'09',id:'DF', name:'Distrito Federal', local:[
+				{id:"010", name:"Alvaro ObregÛn"},
+				{id:"002", name:"Azcapotzalco"},
+				{id:"014", name:"Benito Ju·rez"},
+				{id:"003", name:"Coyoac·n"},
+				{id:"004", name:"Cuajimalpa de Morelos"},
+				{id:"015", name:"CuauhtÈmoc"},
+				{id:"005", name:"Gustavo A. Madero"},
+				{id:"006", name:"Iztacalco"},
+				{id:"007", name:"Iztapalapa"},
+				{id:"008", name:"La Magdalena Contreras"},
+				{id:"016", name:"Miguel Hidalgo"},
+				{id:"009", name:"Milpa Alta"},
+				{id:"011", name:"Tl·huac"},
+				{id:"012", name:"Tlalpan"},
+				{id:"017", name:"Venustiano Carranza"},
+				{id:"013", name:"Xochimilco"}
+			]},
+			{no:'15',id:'MEX.', name:'Estado de México', local:[
+				{id:"046", name:"JILOTEPEC"},
+				{id:"092", name:"TEOLOYUCAN"},
+				{id:"014", name:"ATLACOMULCO"},
+				{id:"061", name:"NICOLAS ROMERO"},
+				{id:"093", name:"TEOTIHUACAN"},
+				{id:"020", name:"COACALCO DE BERRIOZABAL"},
+				{id:"025", name:"CUAUTITLAN IZCALLI"},
+				{id:"110", name:"TULTITLAN"},
+				{id:"043", name:"IXTLAHUACA"},
+				{id:"034", name:"ECATEPEC DE MORELOS"},
+				{id:"040", name:"IXTAPALUCA"},
+				{id:"013", name:"ATIZAPAN DE ZARAGOZA"},
+				{id:"105", name:"TLALNEPANTLA DE BAZ"},
+				{id:"038", name:"HUIXQUILUCAN"},
+				{id:"060", name:"NEZAHUALCOYOTL"},
+				{id:"058", name:"NAUCALPAN DE JUAREZ"},
+				{id:"111", name:"VALLE DE BRAVO"},
+				{id:"032", name:"CHIMALHUACAN"},
+				{id:"107", name:"TOLUCA"},
+				{id:"055", name:"METEPEC"},
+				{id:"121", name:"ZUMPANGO"},
+				{id:"122", name:"VALLE DE CHALCO SOLIDARIDAD"},
+				{id:"026", name:"CHALCO"},
+				{id:"089", name:"TENANCINGO"},
+				{id:"083", name:"TEJUPILCO"},
+				{id:"024", name:"CUAUTITLAN"},
+				{id:"100", name:"TEXCOCO"},
+				{id:"071", name:"LA PAZ"},
+				{id:"119", name:"ZINACANTEPEC"}
+			]},
+			{no:'17',id:'MOR',		name:'Morelos', local:[]},
+			{no:'22',id:'QRO',		name:'Querétaro', local:[]},
+			{no:'11',id:'GTO',		name:'Guanajuato', local:[]},
+			{no:'24',id:'S.L.P',	name:'San Luis Potosí', local:[]},
+			{no:'01',id:'AGS',name:'Aguascalientes', local:[]},
 		];
 
 		$scope.toggleContent = function(){
@@ -48,7 +95,7 @@
 	    };
 
 		$scope.create = function(){
-			
+			console.log($scope.data);
 			$scope.data.user = $rootScope.getUser();
 			$service.build($scope.data)
                 .then(function(data) {
@@ -96,18 +143,27 @@
 		$scope.clearAll = function(){
 			$scope.clear();
 			$scope.clearResult();
-			$scope.data.baseAddress.state 		=  {no:"",id:"",name:""};
-;
+			$scope.data.baseAddress.state 		=  '{"no":"","id":"","name":"","local":[]}';
 			$scope.data.baseAddress.local 		= '';
 			$scope.data.baseAddress.del 		= '';
-			$scope.data.baseAddress.localN 		= '';
+			$scope.data.baseAddress.localN 		= { id:"", name:"" };
 			$scope.data.baseAddress.delN 		= '';
 			$scope.data.baseAddress.cp 			= '';
 			$scope.data.baseAddress.section 	= '';
-
+			$scope.localList = [];
 		};
 
+
 		$scope.clearAll();
+
+		$scope.$watch('data.baseAddress.state', function(){
+			console.log($scope.data.baseAddress.state);
+			var temp = JSON.parse($scope.data.baseAddress.state);
+			$scope.localList = temp.local || [];
+			console.log(temp);
+		});
+
+		
 	};
 	controller.$inject = ['$rootScope','$scope','service','serviceLogin'];
 	angular.module('app',['http','httpLogin','Components']).controller('FormController',controller);
