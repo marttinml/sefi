@@ -8,7 +8,7 @@
             $rootScope.spin = val == 0 ? false : true;
         })
 		var shared = {};
-		var baseUrl = 'https://mysterious-earth-97327.herokuapp.com/';
+		var baseUrl = 'https://rocky-badlands-34350.herokuapp.com/';
 		//var baseUrl = 'http://localhost:5000/';
 		var req = {
 			 method: 'POST',

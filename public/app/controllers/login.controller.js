@@ -34,7 +34,7 @@
                     $scope.spin = false;
                     if(data.success){
                         //window.location.href = "http://alom.mx/sefi/home.html";
-                        window.location.href = "https://stark-bastion-33994.herokuapp.com";
+                        window.location.href = "https://cryptic-tundra-29048.herokuapp.com/";
                     }else{
 
                     }

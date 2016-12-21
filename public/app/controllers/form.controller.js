@@ -102,7 +102,7 @@
                 	console.log(data);
                     $scope.result = data;
                     $scope.result.picture = $scope.backgroundPicture;
-                    $scope.result.pictureSign = {'background-image':'url(https://stark-bastion-33994.herokuapp.com'+$scope.result.sign+')'};
+                    $scope.result.pictureSign = {'background-image':'url(https://cryptic-tundra-29048.herokuapp.com'+$scope.result.sign+')'};
                 }, function(error) {
                     console.log(error);
                 });
